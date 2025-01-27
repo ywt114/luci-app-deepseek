@@ -1,0 +1,27 @@
+#!/bin/sh /etc/rc.common
+
+USE_PROCD=1
+START=95
+STOP=01
+
+start_service() {
+    [ "$(uci -q get deepseek.settings.enabled)" != "1" ] && exit 0
+    
+    procd_open_instance
+    procd_set_param command /usr/libexec/rpc-deepseek \
+        --api-key "$(uci -q get deepseek.settings.api_key)" \
+        --interval "$(uci -q get deepseek.settings.interval)"
+    procd_set_param respawn
+    procd_set_param stdout 1
+    procd_set_param stderr 1
+    procd_close_instance
+}
+
+stop_service() {
+    killall rpc-deepseek
+}
+
+reload_service() {
+    stop
+    start
+}
