@@ -1,0 +1,32 @@
+msgid "DeepSeek"
+msgstr "深度求索"
+
+msgid "General Settings"
+msgstr "常规设置"
+
+msgid "Enable Service"
+msgstr "启用服务"
+
+msgid "API Key"
+msgstr "API密钥"
+
+msgid "Update Interval (seconds)"
+msgstr "更新间隔（秒）"
+
+msgid "Service is running"
+msgstr "服务运行中"
+
+msgid "Service is not running"
+msgstr "服务未运行"
+
+msgid "Start Service"
+msgstr "启动服务"
+
+msgid "Stop Service"
+msgstr "停止服务"
+
+msgid "Restart Service"
+msgstr "重启服务"
+
+msgid "DeepSeek Service Status"
+msgstr "深度求索服务状态"
