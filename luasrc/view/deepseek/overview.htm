@@ -1,18 +1,43 @@
 <%+header%>
-<h2><%:DeepSeek Status%></h2>
-<div id="status_container"></div>
+<div class="cbi-map">
+    <h2 name="content"><%:DeepSeek Service Status%></h2>
+    
+    <div class="cbi-section">
+        <div class="cbi-section-node">
+            <div id="status" class="alert-message" style="margin-bottom:15px"></div>
+            
+            <div class="btn-group">
+                <button class="btn cbi-button cbi-button-apply" onclick="control('start')">
+                    <%:Start Service%>
+                </button>
+                <button class="btn cbi-button cbi-button-reset" onclick="control('stop')">
+                    <%:Stop Service%>
+                </button>
+                <button class="btn cbi-button cbi-button-reload" onclick="control('restart')">
+                    <%:Restart Service%>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
-XHR.poll(5, '<%=luci.dispatcher.build_url("admin", "services", "deepseek", "get_status")%>', 
-    null, 
-    function(x, info) {
-        let statusDiv = document.getElementById('status_container');
-        if (info.status.includes('running')) {
-            statusDiv.innerHTML = '<span style="color: green">● <%:Service is running%></span>';
+XHR.poll(3, '<%=luci.dispatcher.build_url("admin/services/deepseek/get_status")%>', null,
+    function(xhr, data) {
+        let statusDiv = document.getElementById('status');
+        if (data.status.includes('running')) {
+            statusDiv.innerHTML = '<div class="alert-message success">● <%:Service is running%></div>';
         } else {
-            statusDiv.innerHTML = '<span style="color: red">● <%:Service is stopped%></span>';
+            statusDiv.innerHTML = '<div class="alert-message error">● <%:Service is not running%></div>';
         }
     }
 );
+
+function control(action) {
+    XHR.post('<%=luci.dispatcher.build_url("admin/services/deepseek/control")%>', 
+        { action: action },
+        function() { window.location.reload() }
+    );
+}
 </script>
 <%+footer%>
