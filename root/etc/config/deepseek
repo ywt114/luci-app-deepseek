@@ -1,0 +1,4 @@
+config general 'settings'
+    option enabled '0'
+    option api_key ''
+    option interval '300'
