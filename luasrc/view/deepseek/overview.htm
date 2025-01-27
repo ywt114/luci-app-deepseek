@@ -1,0 +1,18 @@
+<%+header%>
+<h2><%:DeepSeek Status%></h2>
+<div id="status_container"></div>
+
+<script>
+XHR.poll(5, '<%=luci.dispatcher.build_url("admin", "services", "deepseek", "get_status")%>', 
+    null, 
+    function(x, info) {
+        let statusDiv = document.getElementById('status_container');
+        if (info.status.includes('running')) {
+            statusDiv.innerHTML = '<span style="color: green">● <%:Service is running%></span>';
+        } else {
+            statusDiv.innerHTML = '<span style="color: red">● <%:Service is stopped%></span>';
+        }
+    }
+);
+</script>
+<%+footer%>
