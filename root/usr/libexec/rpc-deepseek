@@ -1,0 +1,7 @@
+#!/bin/sh
+
+while true; do
+    # 示例：每间隔时间输出日志
+    logger -t deepseek "Service is running with interval: $(uci -q get deepseek.settings.interval)"
+    sleep $(uci -q get deepseek.settings.interval || echo 300)
+done
