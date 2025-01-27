@@ -4,30 +4,11 @@ PKG_NAME:=luci-app-deepseek
 PKG_VERSION:=1.0
 PKG_RELEASE:=1
 
-include $(INCLUDE_DIR)/package.mk
+LUCI_TITLE:=DeepSeek Configuration Interface
+LUCI_DEPENDS:=+luci-base +luci-compat
+LUCI_PKGARCH:=all
 
-define Package/$(PKG_NAME)
-  SECTION:=luci
-  CATEGORY:=LuCI
-  SUBMENU:=3. Applications
-  TITLE:=DeepSeek Configuration Interface
-  DEPENDS:=+luci-base +luci-compat
-  PKGARCH:=all
-endef
-
-define Package/$(PKG_NAME)/description
-  LuCI interface for configuring DeepSeek services.
-endef
-
-define Build/Prepare
-    mkdir -p $(PKG_BUILD_DIR)
-endef
-
-define Build/Configure
-endef
-
-define Build/Compile
-endef
+include $(TOPDIR)/feeds/luci/luci.mk
 
 define Package/$(PKG_NAME)/install
     # 安装LuCI组件
@@ -45,6 +26,11 @@ define Package/$(PKG_NAME)/install
     # 安装执行脚本
     $(INSTALL_DIR) $(1)/usr/libexec/
     $(INSTALL_BIN) ./root/usr/libexec/rpc-deepseek $(1)/usr/libexec/
+    
+    # 安装多语言文件
+    $(INSTALL_DIR) $(1)/usr/lib/lua/luci/i18n
+    $(INSTALL_DATA) ./po/zh_Hans/deepseek.po $(1)/usr/lib/lua/luci/i18n/deepseek.zh_Hans.po
 endef
 
+# 包含多语言支持
 $(eval $(call BuildPackage,$(PKG_NAME)))
